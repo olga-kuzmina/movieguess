@@ -5,16 +5,16 @@
 {% endblock %}
 
 {% block body %}
-  <form action="/add" method="post" class="form-horizontal">
-      <div class="controls">
-          <input class="file" id="fileInput" type="file">
-      </div>
-      <div class="controls">
+<form action="/add" method="post" class="form-horizontal">
+    <div class="controls">
+        <input class="file" id="fileInput" type="file">
+    </div>
+    <div class="controls">
         <input type="text" class="span4" placeholder="Введите название фильма…" name="name">
-      </div>
-      <div class="controls">
-        <button type="submit" class="btn error">Добавить</button>
-      </div>
-  </form>
+    </div>
+    <div class="controls">
+        <button type="submit" class="btn">Добавить</button>
+    </div>
+</form>
 
 {% endblock %}

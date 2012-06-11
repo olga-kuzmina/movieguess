@@ -8,8 +8,8 @@
     <title>{% block title %}{% endblock %}</title>
 </head>
 <body>
-<div id="menu" class="topbar">
-    <div class="topbar-inner">
+<div id="menu" class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
         <div class="container">
             <ul class="nav">
                 <li><a href="/add" title="add">Добавление</a></li>
@@ -19,9 +19,9 @@
     </div>
 </div>
 <div class="container">
-<div class="hero-unit">
-{% block body %}{% endblock %}
-</div>
+    <div class="hero-unit">
+        {% block body %}{% endblock %}
+    </div>
 </div>
 </body>
 </html>
