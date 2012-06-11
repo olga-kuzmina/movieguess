@@ -7,14 +7,27 @@
 {% block body %}
 <form action="/add" method="post" class="form-horizontal">
     <div class="controls">
-        <input class="file" id="fileInput" type="file">
+        <input class="file" id="fileInput" type="file" name='file'>
     </div>
     <div class="controls">
-        <input type="text" class="span4" placeholder="Введите название фильма…" name="name">
+        <input type="hidden" name="movie_id" id="hidden_id">
+        <input type="text" class="span4 typeahead" placeholder="Введите название фильма…" style="margin: 0 auto;"
+               data-provide="typeahead" data-items="4">
     </div>
     <div class="controls">
         <button type="submit" class="btn">Добавить</button>
     </div>
 </form>
-
+<script type="text/javascript">
+    $('.typeahead').typeahead({
+        source:function (typeahead, query) {
+            return $.post('/movies_list', { query:query }, function (data) {
+                return typeahead.process(data);
+            });
+        },
+        onselect:function (val) {
+            var id = $('#hidden_id').val(val.id);
+        }
+    });
+</script>
 {% endblock %}
