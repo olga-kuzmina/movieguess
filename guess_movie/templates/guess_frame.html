@@ -4,4 +4,60 @@
 {% endblock %}
 
 {% block body %}
+<form action="/guess" method="post" class="form-horizontal" id="myForm">
+    <fieldset>
+        <div class="control-group">
+            <div class="controls">
+                <input type="hidden" name="frame_id" id="hiddenFrameId" value={{frame_id}}>
+                <input type="hidden" name="movie_id" id="hiddenId">
+                <input type="text" class="span3 typeahead" placeholder="Введите название фильма…"
+                       style="margin: 0 auto;"
+                       data-provide="typeahead" data-items="4">
+
+                <button type="submit" class="btn btn-primary">Угадать</button>
+            </div>
+        </div>
+        <div class="controls span5">
+            <img src="{{ img_src }}">
+        </div>
+        <div class="controls alert span5" id="result">
+            <p id="resultText">
+            </p>
+            <a class="btn" id="resultBtn" href="#">Угадать новый фильм</a>
+        </div>
+    </fieldset>
+</form>
+
+<script type="text/javascript">
+    $('#myForm')
+            .ajaxForm({
+                url:'/guess',
+                dataType:'json',
+                success:function (response) {
+                    if (response.success) {
+                        $('#resultText').html('<strong>Верно!</strong> <br /> Это фильм "' + response.movie_name + '"');
+                        $('#result').addClass('alert-success');
+                        $('#resultBtn').addClass('btn-success');
+                        $('#resultBtn').removeClass('btn-danger');
+                    } else {
+                        $('#resultText').html('<strong>Неверно!</strong> <br /> Это фильм "' + response.movie_name + '"');
+                        $('#result').addClass('alert-error');
+                        $('#resultBtn').addClass('btn-danger');
+                        $('#resultBtn').removeClass('btn-successо');
+                    }
+                }
+            });
+    $('.typeahead').typeahead({
+        source:function (typeahead, query) {
+            var callbackFunc = function (data) {
+                typeahead.process(data);
+            }
+            $.get('http://api.themoviedb.org/2.1/Movie.search/ru/json/a3dc111e66105f6387e99393813ae4d5/' + query, {}, callbackFunc, 'jsonp');
+        },
+        onselect:function (val) {
+            $('#hiddenId').val(val.id);
+        },
+        property:'name'
+    });
+</script>
 {% endblock %}
