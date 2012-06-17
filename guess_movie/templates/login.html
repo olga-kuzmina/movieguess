@@ -4,7 +4,8 @@
 {% endblock %}
 
 {% block body %}
-<form action="{%url django.contrib.auth.views.login  %}?next={%url guess_movie.views.guess %}" method="post">
+<form action="{%url django.contrib.auth.views.login  %}?next={%url guess_movie.views.guess %}" method="post"
+      class="validateForm">
     {% csrf_token %}
     {% if form.non_field_errors %}
     <div class="clearfix">
@@ -19,14 +20,14 @@
             <label for="login"><strong>Имя пользователя</strong></label>
 
             <div class="input">
-                <input id="login" name="username" type="text"/>
+                <input id="login" name="username" type="text" class="required" maxlength="30"/>
             </div>
         </div>
         <div class="clearfix">
             <label for="password"><strong>Пароль</strong></label>
 
             <div class="input">
-                <input id="password" name="password" type="password"/>
+                <input id="password" name="password" type="password" class="required"/>
             </div>
         </div>
     </fieldset>

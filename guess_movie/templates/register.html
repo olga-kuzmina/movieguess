@@ -4,42 +4,42 @@
 {% endblock %}
 
 {% block body %}
-<form action="{%url guess_movie.views.register %}" method="post">
+<form action="{%url guess_movie.views.register %}" method="post" class="validateForm">
     {% csrf_token %}
     <fieldset>
         <div class="clearfix">
-            <label for="login"><strong>Имя пользователя</strong></label>
+            <label for="login"><strong>Имя пользователя *</strong></label>
 
             <div class="input">
-                <input id="login" name="login" type="text"/>
+                <input id="login" name="login" type="text" class="required" maxlength="30"/>
             </div>
         </div>
         <div class="clearfix">
-            <label for="password"><strong>Пароль</strong></label>
+            <label for="password"><strong>Пароль *</strong></label>
 
             <div class="input">
-                <input id="password" name="password" type="password"/>
+                <input id="password" name="password" type="password" class="required"/>
             </div>
         </div>
         <div class="clearfix">
-            <label for="surname"><strong>Фамилия</strong></label>
+            <label for="surname"><strong>Фамилия *</strong></label>
 
             <div class="input">
-                <input id="surname" name="surname" type="text"/>
+                <input id="surname" name="surname" type="text" class="required" maxlength="30"/>
             </div>
         </div>
         <div class="clearfix">
-            <label for="name"><strong>Имя</strong></label>
+            <label for="name"><strong>Имя *</strong></label>
 
             <div class="input">
-                <input id="name" name="name" type="text"/>
+                <input id="name" name="name" type="text" class="required" maxlength="30"/>
             </div>
         </div>
         <div class="clearfix">
-            <label for="name"><strong>E-mail</strong></label>
+            <label for="name"><strong>E-mail *</strong></label>
 
             <div class="input">
-                <input id="email" name="email" type="text"/>
+                <input id="email" name="email" type="text" class="required email"/>
             </div>
         </div>
     </fieldset>
