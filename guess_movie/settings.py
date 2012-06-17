@@ -156,3 +156,5 @@ LOGGING = {
             },
         }
 }
+AUTH_PROFILE_MODULE = 'guess_movie.UserProfile'
+LOGIN_URL = '/login'

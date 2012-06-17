@@ -7,7 +7,9 @@ from django.conf.urls import patterns, include, url
 urlpatterns = patterns('',
     url(r'^add$', 'guess_movie.views.add'),
     url(r'^guess$', 'guess_movie.views.guess'),
-    url(r'^movies_list$', 'guess_movie.views.movies_list'),
+    url(r'^register$', 'guess_movie.views.register'),
+    url(r'^login$', 'django.contrib.auth.views.login', {'template_name': 'login.html'}),
+    url(r'^logout/$', 'django.contrib.auth.views.logout', {'next_page': '/login'})
     # Examples:
     # url(r'^$', 'guess_movie.views.home', name='home'),
     # url(r'^guess_movie/', include('guess_movie.foo.urls')),
