@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+{% block title %}
+Угадай фильм по кадру
+{% endblock %}
+
+{% block body %}
+<form action="/guess" method="post" class="form-horizontal" id="myForm">
+    <fieldset>
+        <div class="control-group">
+            <div class="controls">
+                <input type="hidden" name="frame_id" id="hiddenFrameId" value={{frame_id}}>
+                <input type="hidden" name="movie_id" id="hiddenId">
+                <input type="hidden" name="movie_name" id="hiddenName">
+                <input type="text" class="span3 typeahead" placeholder="Введите название фильма…"
+                       style="margin: 0 auto;"
+                       data-provide="typeahead" data-items="4">
+
+                <button type="submit" class="btn btn-primary">Угадать</button>
+            </div>
+        </div>
+        <div class="controls span5" id='movieFrameImage'>
+            <img src="{{ img_src }}">
+        </div>
+        <div class="controls alert span5" id="result">
+            <p id="resultText">
+            </p>
+            <a class="btn" id="resultBtn" href="/guess" rel="popover">Угадать новый фильм</a>
+        </div>
+    </fieldset>
+</form>
+
+<script type="text/javascript">
+    $('#myForm')
+            .ajaxForm({
+                url:'/guess',
+                dataType:'json',
+                success:function (response) {
+                    var resBtn = $('#resultBtn');
+                    if (response.success) {
+                        $('#resultText').html('<strong>Верно!</strong> <br /> Это фильм "' + response.movie_name + '"');
+                        $('#result').addClass('alert-success');
+                        $('#result').removeClass('alert-error');
+                        resBtn.addClass('btn-success');
+                        resBtn.removeClass('btn-danger');
+
+                        if (response.wrong_guess) {
+                            resBtn.attr('data-content', response.wrong_guess);
+                            resBtn.attr('title', "Этот фильм чаще всего путают с фильмом");
+                            resBtn.attr('data-original-title', "Этот фильм чаще всего путают с фильмом");
+                        }
+                    } else {
+                        $('#resultText').html('<strong>Неверно!</strong> <br /> Это фильм "' + response.movie_name + '"');
+                        $('#result').addClass('alert-error');
+                        $('#result').removeClass('alert-success');
+                        resBtn.addClass('btn-danger');
+                        resBtn.removeClass('btn-success');
+
+                        resBtn.removeAttr('title');
+                        resBtn.removeAttr('data-content');
+                    }
+                }
+            });
+    $('.typeahead').typeahead({
+        source:function (typeahead, query) {
+            var callbackFunc = function (data) {
+                typeahead.process(data);
+            }
+            $.get('http://api.themoviedb.org/2.1/Movie.search/ru/json/a3dc111e66105f6387e99393813ae4d5/' + query, {}, callbackFunc, 'jsonp');
+        },
+        onselect:function (val) {
+            $('#hiddenId').val(val.id);
+            $('#hiddenName').val(val.name);
+        },
+        property:'name'
+    });
+</script>
+{% endblock %}
