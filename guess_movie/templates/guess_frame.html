@@ -10,6 +10,7 @@
             <div class="controls">
                 <input type="hidden" name="frame_id" id="hiddenFrameId" value={{frame_id}}>
                 <input type="hidden" name="movie_id" id="hiddenId">
+                <input type="hidden" name="movie_name" id="hiddenName">
                 <input type="text" class="span3 typeahead" placeholder="Введите название фильма…"
                        style="margin: 0 auto;"
                        data-provide="typeahead" data-items="4">
@@ -17,13 +18,13 @@
                 <button type="submit" class="btn btn-primary">Угадать</button>
             </div>
         </div>
-        <div class="controls span5">
+        <div class="controls span5" id='movieFrameImage'>
             <img src="{{ img_src }}">
         </div>
         <div class="controls alert span5" id="result">
             <p id="resultText">
             </p>
-            <a class="btn" id="resultBtn" href="#">Угадать новый фильм</a>
+            <a class="btn" id="resultBtn" href="/guess" rel="popover">Угадать новый фильм</a>
         </div>
     </fieldset>
 </form>
@@ -34,16 +35,28 @@
                 url:'/guess',
                 dataType:'json',
                 success:function (response) {
+                    var resBtn = $('#resultBtn');
                     if (response.success) {
                         $('#resultText').html('<strong>Верно!</strong> <br /> Это фильм "' + response.movie_name + '"');
                         $('#result').addClass('alert-success');
-                        $('#resultBtn').addClass('btn-success');
-                        $('#resultBtn').removeClass('btn-danger');
+                        $('#result').removeClass('alert-error');
+                        resBtn.addClass('btn-success');
+                        resBtn.removeClass('btn-danger');
+
+                        if (response.wrong_guess) {
+                            resBtn.attr('data-content', response.wrong_guess);
+                            resBtn.attr('title', "Этот фильм чаще всего путают с фильмом");
+                            resBtn.attr('data-original-title', "Этот фильм чаще всего путают с фильмом");
+                        }
                     } else {
                         $('#resultText').html('<strong>Неверно!</strong> <br /> Это фильм "' + response.movie_name + '"');
                         $('#result').addClass('alert-error');
-                        $('#resultBtn').addClass('btn-danger');
-                        $('#resultBtn').removeClass('btn-successо');
+                        $('#result').removeClass('alert-success');
+                        resBtn.addClass('btn-danger');
+                        resBtn.removeClass('btn-success');
+
+                        resBtn.removeAttr('title');
+                        resBtn.removeAttr('data-content');
                     }
                 }
             });
@@ -56,6 +69,7 @@
         },
         onselect:function (val) {
             $('#hiddenId').val(val.id);
+            $('#hiddenName').val(val.name);
         },
         property:'name'
     });

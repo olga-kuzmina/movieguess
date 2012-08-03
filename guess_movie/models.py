@@ -12,12 +12,16 @@ class UserProfile(models.Model):
         db_table = 'user_profile'
 
 
+class TMDBMovie(Model):
+    tmdb_id = models.CharField(max_length=100)
+    tmdb_name = models.CharField(max_length=300)
+
+
 class Frame(Model):
     '''
     Кадр из фильма
     '''
-    movie_tmdb_id = models.CharField(max_length=100)
-    movie_tmdb_name = models.CharField(max_length=300)
+    movie = models.ForeignKey(TMDBMovie)
     file = models.ImageField(upload_to='pictures')
     owner = models.ForeignKey(UserProfile)
 
@@ -28,3 +32,13 @@ class GuessedFrames(models.Model):
     '''
     user = models.ForeignKey(UserProfile)
     frame = models.ForeignKey(Frame, related_name='users_guessed')
+
+
+class WrongGuesses(models.Model):
+    '''
+    История ошибочных попыток угадать фильм
+    '''
+    frame = models.ForeignKey(Frame)
+    movie = models.ForeignKey(TMDBMovie)
+    counter = models.IntegerField(blank=True, default=0)
+

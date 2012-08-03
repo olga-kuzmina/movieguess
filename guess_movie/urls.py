@@ -5,8 +5,10 @@ from django.conf.urls import patterns, include, url
 # admin.autodiscover()
 
 urlpatterns = patterns('',
+    url(r'^$', 'guess_movie.views.guess'),
     url(r'^add$', 'guess_movie.views.add'),
     url(r'^guess$', 'guess_movie.views.guess'),
+    url(r'^rating$', 'guess_movie.views.rating'),
     url(r'^register$', 'guess_movie.views.register'),
     url(r'^login$', 'django.contrib.auth.views.login', {'template_name': 'login.html'}),
     url(r'^logout/$', 'django.contrib.auth.views.logout', {'next_page': '/login'})
