@@ -27,7 +27,7 @@ distribute==0.6.24dev-r0
 duplicity==0.6.18
 httplib2==0.7.2
 jockey==0.9.7
-keyring==0.7.1
+keyring==0.10
 language-selector==0.1
 launchpadlib==1.9.12
 lazr.restfulclient==0.12.0
