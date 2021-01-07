@@ -33,7 +33,7 @@ launchpadlib==1.9.12
 lazr.restfulclient==0.12.0
 lazr.uri==1.0.3
 louis==2.3.0
-lxml==2.3.2
+lxml==4.6.2
 mercurial==2.0.2
 nvidia-common==0.0.0
 oauth==1.0.1
