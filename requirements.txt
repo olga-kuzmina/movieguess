@@ -54,7 +54,7 @@ python-dateutil==1.5
 python-debian==0.1.21ubuntu1
 python-virtkey==0.60.0
 pyxdg==0.19
-reportlab==2.5
+reportlab==3.5.55
 rhythmbox-ubuntuone==3.0.0
 sessioninstaller==0.0.0
 simplejson==2.3.2
